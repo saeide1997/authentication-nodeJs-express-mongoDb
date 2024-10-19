@@ -33,13 +33,14 @@ const register = async (req, res) => {
 
         //-- hashing password
         const hashedPassword = await bcrypt.hash(password, 10)
-
+        
         const newUser = new User({ username, password: hashedPassword, role })
         await newUser.save()
+        console.log('body', req.body);
         res.status(201).json({ message: `User Registered with username ${username}` })
     }
     catch (err) {
-        res.status(500).json({ message: `SomeThing went wrong` })
+        res.status(500).json({ message: `SomeThing went wrong: ${err}`  })
     }
 }
 
